@@ -1,7 +1,7 @@
 name: reminder_app
-description: تطبيق مذكّرات ومهام يعمل أوفلاين بالكامل (GetX + MVC)
+description: تطبيق تذكير للمشاوير اليومية مع تنبيهات ذكية وتصميم احترافي (GetX + MVC)
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: ^3.9.0
@@ -27,18 +27,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # لإضافة خط (مثل Cairo): ضع الملفات في assets/fonts ثم فعّل:
-  # fonts:
-  #   - family: Cairo
-  #     fonts:
-  #       - asset: assets/fonts/Cairo-Regular.ttf
-  #       - asset: assets/fonts/Cairo-Bold.ttf
-  #         weight: 700
+  assets:
+    - assets/sound/
+    - assets/icon/
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Cairo-Bold.ttf
+          weight: 700
 
 flutter_launcher_icons:
   android: true
   ios: false
   image_path: "assets/icon/icon.png"
-  adaptive_icon_background: "#5B5BD6"
+  adaptive_icon_background: "#4F46E5"
   adaptive_icon_foreground: "assets/icon/icon_foreground.png"
   min_sdk_android: 21

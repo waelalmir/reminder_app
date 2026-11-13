@@ -11,16 +11,24 @@ abstract class Routes {
   static const settings = '/settings';
 
   static final pages = <GetPage>[
-    GetPage(name: home, page: () => const HomeView(), binding: HomeBinding()),
     GetPage(
-        name: add,
-        page: () => const AddTaskView(),
-        binding: AddTaskBinding(),
-        transition: Transition.downToUp),
+      name: home,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
     GetPage(
-        name: settings,
-        page: () => const SettingsView(),
-        binding: SettingsBinding(),
-        transition: Transition.rightToLeft),
+      name: add,
+      page: () => const AddTaskView(),
+      binding: AddTaskBinding(),
+      transition: Transition.downToUp,
+      transitionDuration: const Duration(milliseconds: 280),
+    ),
+    GetPage(
+      name: settings,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: const Duration(milliseconds: 260),
+    ),
   ];
 }

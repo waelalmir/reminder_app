@@ -1,59 +1,69 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_fonts.dart';
 
 class PillToggle extends StatelessWidget {
   final List<String> items;
-  final int index;
+  final int selected;
   final ValueChanged<int> onChanged;
 
   const PillToggle({
     super.key,
     required this.items,
-    required this.index,
+    required this.selected,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: cs.onSurface.withValues(alpha: .07),
-        borderRadius: BorderRadius.circular(30),
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.black.withValues(alpha: 0.04),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
-        children: [
-          for (var i = 0; i < items.length; i++)
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => onChanged(i),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 220),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(26),
-                    gradient: i == index
-                        ? const LinearGradient(colors: AppColors.headerGradient)
-                        : null,
-                  ),
-                  child: Text(
-                    items[i],
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: i == index
-                          ? Colors.white
-                          : cs.onSurface.withValues(alpha: .7),
-                    ),
+        children: List.generate(items.length, (i) {
+          final active = i == selected;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => onChanged(i),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: active ? cs.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: active
+                      ? [
+                          BoxShadow(
+                            color: cs.primary.withValues(alpha: 0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ]
+                      : null,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  items[i],
+                  style: AppFonts.small.copyWith(
+                    fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+                    color: active
+                        ? Colors.white
+                        : cs.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
               ),
             ),
-        ],
+          );
+        }),
       ),
     );
   }
